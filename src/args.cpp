@@ -3,7 +3,7 @@
 * Kuva - Graph cut texturing
 * 
 * From:
-*      V.Kwatra, A.Schödl, I.Essa, G.Turk, A.Bobick, 
+*      V.Kwatra, A.Schï¿½dl, I.Essa, G.Turk, A.Bobick, 
 *      Graphcut Textures: Image and Video Synthesis Using Graph Cuts
 *      http://www.cc.gatech.edu/cpl/projects/graphcuttextures/
 *
@@ -37,7 +37,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 #include "args.h"
 #include "graph.h"
-
+#include <sys/time.h>
 
 
 /************/
@@ -548,8 +548,8 @@ void Args::dispImageErr( string title ) {
 
 	int k, l;
 	/* set the background and improve the seams look */
-	for ( int i=0; i < img_err->dimx(); i++ ) 
-		for ( int j=0; j < img_err->dimy(); j++ ) {
+	for ( int i=0; i < img_err->width(); i++ ) 
+		for ( int j=0; j < img_err->height(); j++ ) {
 			if ( (*img_err)( i, j ) != 0 ) {
 				(*img_err)( i, j, 0 ) = (*img_out)( i, j, 0);
 				(*img_err)( i, j, 1 ) = (*img_out)( i, j, 1);
@@ -559,8 +559,8 @@ void Args::dispImageErr( string title ) {
 			else { // enlarge seam
 				for ( k=0; k < 2; k++ )
 					for ( l=0; l < 2; l++ ) {
-						if ( (i-1+k>=0) && (i-1+k<img_err->dimx()) )
-							if ( (j-1+l>=0) && (j-1+l<img_err->dimy()) ) {		
+						if ( (i-1+k>=0) && (i-1+k<img_err->width()) )
+							if ( (j-1+l>=0) && (j-1+l<img_err->height()) ) {		
 								(*img_err)( i-1+k, j-1+l, 0 ) = 0;
 								(*img_err)( i-1+k, j-1+l, 1 ) = 0;
 								(*img_err)( i-1+k, j-1+l, 2 ) = 255;
@@ -586,8 +586,8 @@ void Args::openImageIn() {
 	*/
 	if ( file_in != "" )
 		img_in = new cimg_library::CImg< uchar_t >( file_in.c_str() ); 
-	p_width = img_in->dimx();
-	p_height = img_in->dimy();
+	p_width = img_in->width();
+	p_height = img_in->height();
 }
 
 
@@ -608,8 +608,8 @@ void Args::openImageOut() {
 		img_err->fill( 255 );
 
 		/* Set dimensions */
-		t_width = img_out->dimx();
-		t_height = img_out->dimy();
+		t_width = img_out->width();
+		t_height = img_out->height();
 		total_pixels = t_width * t_height;
 
 		/* Initialize old seam databases */
@@ -713,9 +713,10 @@ bool Args::verbose() {
 void Args::initRandom() {
 	/*
 	Initialize pseudo-random number generator,
-	using process' PID.
+	using timestamp.
 	*/
-	srand( (int)_getpid() );
+	struct timeval now;
+	srand( (int)now.tv_sec );
 }
 
 
