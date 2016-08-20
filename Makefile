@@ -3,7 +3,7 @@
 # * Kuva - Graph cut texturing
 # * 
 # * From:
-# *      V.Kwatra, A.Schödl, I.Essa, G.Turk, A.Bobick, 
+# *      V.Kwatra, A.Schï¿½dl, I.Essa, G.Turk, A.Bobick, 
 # *      Graphcut Textures: Image and Video Synthesis Using Graph Cuts
 # *      http://www.cc.gatech.edu/cpl/projects/graphcuttextures/
 # *
@@ -52,19 +52,19 @@ $(BIN):		main.o args.o  argsgraph.o graph.o maxflow.o
 		$(CC) $(LFLAG)  $(OPATH)/main.o $(OPATH)/args.o $(OPATH)/argsgraph.o \
 		$(OPATH)/graph.o $(OPATH)/maxflow.o -o $@
 
-main.o:		main.cc
+main.o:		main.cpp
 		$(cC) $(CFLAG) $^ -o $(VPATH)/$@
 
-args.o:		args.cc
+args.o:		args.cpp
 		$(cC) $(CFLAG) $^ -o $(VPATH)/$@
 
-argsgraph.o:	argsgraph.cc
+argsgraph.o:	argsgraph.cpp
 		$(cC) $(CFLAG) $^ -o $(VPATH)/$@
 
-graph.o:	graph.cc
+graph.o:	graph.cpp
 		$(cC) $(GFLAG) $^ -o $(VPATH)/$@
 
-maxflow.o:	maxflow.cc
+maxflow.o:	maxflow.cpp
 		$(cC) $(GFLAG) $^ -o $(VPATH)/$@
 
 clean:
