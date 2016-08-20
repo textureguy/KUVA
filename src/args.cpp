@@ -716,6 +716,7 @@ void Args::initRandom() {
 	using timestamp.
 	*/
 	struct timeval now;
+	gettimeofday(&now, NULL);
 	srand( (int)now.tv_sec );
 }
 
