@@ -118,7 +118,7 @@ private:
   struct arc_forward_st;
   struct arc_reverse_st;
 
-#define IS_ODD(a) (atoi((a) & 1)
+#define IS_ODD(a) ((int)a & 1)
 #define MAKE_ODD(a)  ((arc_forward *) ((int)(a) | 1))
 #define MAKE_EVEN(a) ((arc_forward *) ((int)(a) & (~1)))
 #define MAKE_ODD_REV(a)  ((arc_reverse *) ((int)(a) | 1))
