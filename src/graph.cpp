@@ -20,7 +20,7 @@
 
 #include <stdio.h>
 #include "graph.h"
-#include <cstdint>
+//#include <cstdint>
 #include <inttypes.h>
 
 Graph::Graph(void (*err_function)(char *))
@@ -111,7 +111,7 @@ void Graph::add_edge(node_id from, node_id to, captype cap, captype rev_cap)
 	a_rev = arc_rev_block_first -> current ++;
 
 	a_rev -> sister = (arc_forward *) from;
-	a_for -> shift  = atoi(to);
+	a_for -> shift  = (intptr_t)to;
 	a_for -> r_cap = cap;
 	a_for -> r_rev_cap = rev_cap;
 

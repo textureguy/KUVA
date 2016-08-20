@@ -45,7 +45,7 @@
 #define __GRAPH_H__
 
 #include "block.h"
-#include <cstdint>
+//#include <cstdint>
 #include <inttypes.h>
 
 /*
@@ -121,10 +121,10 @@ private:
   struct arc_reverse_st;
 
 #define IS_ODD(a) ((intptr_t)a & 1)
-#define MAKE_ODD(a)  ((arc_forward *) ((int)(a) | 1))
-#define MAKE_EVEN(a) ((arc_forward *) ((int)(a) & (~1)))
-#define MAKE_ODD_REV(a)  ((arc_reverse *) ((int)(a) | 1))
-#define MAKE_EVEN_REV(a) ((arc_reverse *) ((int)(a) & (~1)))
+#define MAKE_ODD(a)  ((arc_forward *) ((intptr_t)(a) | 1))
+#define MAKE_EVEN(a) ((arc_forward *) ((intptr_t)(a) & (~1)))
+#define MAKE_ODD_REV(a)  ((arc_reverse *) ((intptr_t)(a) | 1))
+#define MAKE_EVEN_REV(a) ((arc_reverse *) ((intptr_t)(a) & (~1)))
 
   /* node structure */
   typedef struct node_st
