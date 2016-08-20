@@ -20,6 +20,8 @@
 
 #include <stdio.h>
 #include "graph.h"
+//#include <cstdint>
+#include <inttypes.h>
 
 Graph::Graph(void (*err_function)(char *))
 {
@@ -86,7 +88,7 @@ void Graph::add_edge(node_id from, node_id to, captype cap, captype rev_cap)
 		arc_for_block *next = arc_for_block_first;
 		char *ptr = new char[sizeof(arc_for_block)+1];
 		if (!ptr) { if (error_function) (*error_function)("Not enough memory!"); exit(1); }
-		if ((int)ptr & 1) arc_for_block_first = (arc_for_block *) (ptr + 1);
+		if (atoi(ptr) & 1) arc_for_block_first = (arc_for_block *) (ptr + 1);
 		else              arc_for_block_first = (arc_for_block *) ptr;
 		arc_for_block_first -> start = ptr;
 		arc_for_block_first -> current = & ( arc_for_block_first -> arcs_for[0] );
@@ -98,7 +100,7 @@ void Graph::add_edge(node_id from, node_id to, captype cap, captype rev_cap)
 		arc_rev_block *next = arc_rev_block_first;
 		char *ptr = new char[sizeof(arc_rev_block)+1];
 		if (!ptr) { if (error_function) (*error_function)("Not enough memory!"); exit(1); }
-		if ((int)ptr & 1) arc_rev_block_first = (arc_rev_block *) (ptr + 1);
+		if (atoi(ptr) & 1) arc_rev_block_first = (arc_rev_block *) (ptr + 1);
 		else              arc_rev_block_first = (arc_rev_block *) ptr;
 		arc_rev_block_first -> start = ptr;
 		arc_rev_block_first -> current = & ( arc_rev_block_first -> arcs_rev[0] );
@@ -109,14 +111,14 @@ void Graph::add_edge(node_id from, node_id to, captype cap, captype rev_cap)
 	a_rev = arc_rev_block_first -> current ++;
 
 	a_rev -> sister = (arc_forward *) from;
-	a_for -> shift  = (int) to;
+	a_for -> shift  = (intptr_t)to;
 	a_for -> r_cap = cap;
 	a_for -> r_rev_cap = rev_cap;
 
 	((node *)from) -> first_out =
-		(arc_forward *) ((int)(((node *)from) -> first_out) + 1);
+		(arc_forward *) ((intptr_t)(((node *)from) -> first_out) + 1);
 	((node *)to) -> first_in =
-		(arc_reverse *) ((int)(((node *)to) -> first_in) + 1);
+		(arc_reverse *) ((intptr_t)(((node *)to) -> first_in) + 1);
 }
 
 void Graph::set_tweights(node_id i, captype cap_source, captype cap_sink)
@@ -180,7 +182,7 @@ void Graph::prepare_graph()
 		for (i=&nb->nodes[0]; i<nb->current; i++)
 		{
 			/* outgoing arcs */
-			k = (int) i -> first_out;
+			k = (intptr_t)(i -> first_out);
 			if (a_for + k > &ab_for->arcs_for[ARC_BLOCK_SIZE])
 			{
 				if (k > ARC_BLOCK_SIZE) { if (error_function) (*error_function)("# of arcs per node exceeds block size!"); exit(1); }
@@ -191,7 +193,7 @@ void Graph::prepare_graph()
 					arc_for_block *next = arc_for_block_first;
 					char *ptr = new char[sizeof(arc_for_block)+1];
 					if (!ptr) { if (error_function) (*error_function)("Not enough memory!"); exit(1); }
-					if ((int)ptr & 1) arc_for_block_first = (arc_for_block *) (ptr + 1);
+					if (atoi(ptr) & 1) arc_for_block_first = (arc_for_block *) (ptr + 1);
 					else              arc_for_block_first = (arc_for_block *) ptr;
 					arc_for_block_first -> start = ptr;
 					arc_for_block_first -> current = & ( arc_for_block_first -> arcs_for[0] );
@@ -213,7 +215,7 @@ void Graph::prepare_graph()
 			ab_for -> last_node = i;
 
 			/* incoming arcs */
-			k = (int) i -> first_in;
+			k = (intptr_t)(i -> first_in);
 			if (a_rev + k > &ab_rev->arcs_rev[ARC_BLOCK_SIZE])
 			{
 				if (k > ARC_BLOCK_SIZE) { if (error_function) (*error_function)("# of arcs per node exceeds block size!"); exit(1); }
@@ -224,7 +226,7 @@ void Graph::prepare_graph()
 					arc_rev_block *next = arc_rev_block_first;
 					char *ptr = new char[sizeof(arc_rev_block)+1];
 					if (!ptr) { if (error_function) (*error_function)("Not enough memory!"); exit(1); }
-					if ((int)ptr & 1) arc_rev_block_first = (arc_rev_block *) (ptr + 1);
+					if (atoi(ptr) & 1) arc_rev_block_first = (arc_rev_block *) (ptr + 1);
 					else              arc_rev_block_first = (arc_rev_block *) ptr;
 					arc_rev_block_first -> start = ptr;
 					arc_rev_block_first -> current = & ( arc_rev_block_first -> arcs_rev[0] );
@@ -303,7 +305,7 @@ void Graph::prepare_graph()
 		ab_for -> current -> shift     = a_for -> shift;
 		ab_for -> current -> r_cap     = a_for -> r_cap;
 		ab_for -> current -> r_rev_cap = a_for -> r_rev_cap;
-		a_for -> shift = (int) (ab_for -> current + 1);
+		a_for -> shift = (intptr_t) (ab_for -> current + 1);
 		i -> first_out = (arc_forward *) (((char *)a_for) - 1);
 	}
 

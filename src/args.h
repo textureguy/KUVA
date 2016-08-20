@@ -3,7 +3,7 @@
 * Kuva - Graph cut texturing
 * 
 * From:
-*      V.Kwatra, A.Schödl, I.Essa, G.Turk, A.Bobick, 
+*      V.Kwatra, A.Schï¿½dl, I.Essa, G.Turk, A.Bobick, 
 *      Graphcut Textures: Image and Video Synthesis Using Graph Cuts
 *      http://www.cc.gatech.edu/cpl/projects/graphcuttextures/
 *
@@ -177,7 +177,7 @@ protected:
 	cimg_library::CImg< uchar_t > * img_err;
 	/* image to remember top (vertical) seams  (continuous indexing) */
 	vector < vector< uchar_t> > seav;
-	/* image to remember left (horiz.à seams (continuous indexing) */
+	/* image to remember left (horiz.ï¿½ seams (continuous indexing) */
 	vector < vector< uchar_t > > seah;
 
 	/* DISPLAYS */
@@ -259,11 +259,11 @@ public:
 	void setPlacement( char p ) { placement = p; };
 	char getPlacement() { return placement; };
 
-	unsigned getDispKey() { return disp_out->key; };
-	void setDispKey( unsigned k ) { disp_out->key = k; };
+	unsigned getDispKey() { return disp_out->key(); };
+	void setDispKey( unsigned k ) { disp_out->set_key(k); };
 
-	unsigned getDispButton() { return disp_out->button; };
-	void setDispButton( unsigned k ) { disp_out->button = k; };
+	unsigned getDispButton() { return disp_out->button(); };
+	void setDispButton( unsigned k ) { disp_out->set_button(k); };
 
 	void resetPlacement() { placement = placement0; };
 

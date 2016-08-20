@@ -48,7 +48,7 @@
 #include <signal.h>
 
 #include <stdio.h>
-#include <process.h>
+//#include <process.h>
 #include <time.h>
  
 typedef unsigned int uint_t;

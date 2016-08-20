@@ -3,7 +3,7 @@
 * Kuva - Graph cut texturing
 * 
 * From:
-*      V.Kwatra, A.Schödl, I.Essa, G.Turk, A.Bobick, 
+*      V.Kwatra, A.Schï¿½dl, I.Essa, G.Turk, A.Bobick, 
 *      Graphcut Textures: Image and Video Synthesis Using Graph Cuts
 *      http://www.cc.gatech.edu/cpl/projects/graphcuttextures/
 *
@@ -72,7 +72,7 @@ int init( Args * args, vector<string> vargs ) {
 	return 0;
 }
 
-void sleep(unsigned int mseconds)
+void doSleep(unsigned int mseconds)
 {
 	clock_t goal = mseconds + clock();
 	while (goal > clock());
@@ -114,7 +114,7 @@ int mkTexture( Args * args ) {
 
 			// wait for button release
 			while ( args->getDispButton() != 0 ) {
-				sleep( 1 ); 
+				doSleep( 1 ); 
 			}
 			cout << "GO!" << endl;      
 		}
